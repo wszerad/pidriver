@@ -1,6 +1,6 @@
 {
   "name": "pidriver",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Node.js driver for RaspberryPI (A,B,B+) with support for GPIO, SPI, PWM, LCD",
   "main": "index.js",
   "scripts": {

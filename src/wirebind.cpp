@@ -1060,6 +1060,9 @@ static Handle<Value> _lcdPuts(const Arguments& args) {
 		promise->callback = Persistent<Function>::New(callback);
 		promise->fd = args[0]->Int32Value();
 		promise->string = Buffer::Data(args[1]->ToObject());
+
+		size_t len = Buffer::Length(args[1]->ToObject());
+        promise->string[len] = '\0';
 		
 		uv_queue_work(uv_default_loop(), &promise->request, _lcdPutsMain, (uv_after_work_cb)_lcdPutsAfter);
 	} else {
@@ -1341,8 +1344,9 @@ static Handle<Value> _lcdPutsSync(const Arguments& args) {
 
 	int fd = args[0]->Int32Value();
 	char* string = Buffer::Data(args[1]->ToObject());
+	size_t len = Buffer::Length(args[1]->ToObject());
+    string[len] = '\0';
 	lcdPuts(fd, string);
-	
 
 	return scope.Close(Undefined());
 }
