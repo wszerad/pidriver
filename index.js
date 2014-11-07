@@ -614,11 +614,11 @@ LCD.prototype.home = function(cb) {
 		bind._lcdHomeSync(this.fd);
 };
 
-LCD.prototype.write = function(string, cb) {
+LCD.prototype.write = function(buffer, cb) {
 	if(cb)
-		bind._lcdPuts(this.fd, string, cb);
+		bind._lcdPuts(this.fd, buffer, cb);
 	else
-		bind._lcdPutsSync(this.fd, string);
+		bind._lcdPutsSync(this.fd, buffer);
 };
 
 LCD.prototype.setPosition = function(x, y, cb) {
