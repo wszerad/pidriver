@@ -18,12 +18,12 @@ API is at most sync but any function that have callback(cb) can by async
  var ret = input.write(0);
 
  //async
- input,write(0, function(err, ret){
+ input.write(0, function(err, ret){
  	console.log(arguments);
  })
  ```
 
-#### using mods
+#### Using "mods"
 ```js
 	var pi = require('pidriver');
 
@@ -63,6 +63,7 @@ API is at most sync but any function that have callback(cb) can by async
 ```
 
 ### Gpio
+***
 
 ```js
 var pi = require('pidriver'),
@@ -118,10 +119,10 @@ console.log(pi.pins)
 	}
 ```
 
-About mode and pull [wiringPi doc](http://wiringpi.com/reference/core-functions/)
-use mods for edge, mode, pull
+About mode and pull [wiringPi doc](http://wiringpi.com/reference/core-functions/),
+use "mods" for edge, mode, pull
 
-Gpio is also Event Emitter with events:
+Gpio is also Event Emitter:
 
 > Gpio.on('event', cb)
 >
@@ -131,21 +132,22 @@ Gpio is also Event Emitter with events:
 > 'down' - state 0
 
 #### Gpio methods
-Gpio.read([cb])			- read state
-Gpio.write(state [,cb])	- set state
-Gpio.up([cb])			- set state high
-Gpio.down([cb])			- set state low
-Gpio.setEdge(edge)
-Gpio.setDirection(dir)
-Gpio.setPull(pud)
-Gpio.isPullable()
-Gpio.isInput()
-Gpio.isOutput()
-Gpio.direction()		- get direction
-Gpio.options()			- get options
-Gpio.unexport()
+...Gpio.read([cb])			- read state..
+...Gpio.write(state [,cb])	- set state..
+...Gpio.up([cb])			- set state high..
+...Gpio.down([cb])			- set state low..
+...Gpio.setEdge(edge)..
+...Gpio.setDirection(dir)..
+...Gpio.setPull(pud)..
+...Gpio.isPullable()..
+...Gpio.isInput()..
+...Gpio.isOutput()..
+...Gpio.direction()		- get direction..
+...Gpio.options()			- get options..
+..Gpio.unexport()..
 
 ### Group
+***
 ```js
 	var pi = require('pidriver'),
 	led0 = new _.Gpio('GPIO27', {mode: _.OUTPUT}),
@@ -162,14 +164,16 @@ Gpio.unexport()
 **gpios** - Array of Gpio
 
 #### Group methods
-Group.read([cb])
-Group.write(value [,cb])
+...Group.read([cb])..
+...Group.write(value [,cb])..
 > value is number (you can use hex(0xFF) also)
 > number is formatted to bits array (85 -> 01010101) and asian to proper pin
-Group.up([cb])
-Group.down([cb])
+
+...Group.up([cb])..
+...Group.down([cb])..
 
 ### PWM
+***
 ```js
 	var pi = require('pidriver'),
 	pwm = new pi.PWM('PWM0', {});
@@ -202,21 +206,21 @@ Group.down([cb])
 	duty: 0
 }
 ```
-about range, clock, mode see [PWM](http://wiringpi.com/reference/raspberry-pi-specifics/)
+about range, clock, mode see [PWM](http://wiringpi.com/reference/raspberry-pi-specifics/),
 for mode use "mods"
 
 #### PWM methods
-PWM.isHW()			- is hardware PWM (only supported)
-PWM.setRange(range)
-PWM.setClock(clock)
-PWM.setMode(mode)
-PWM.write(value[, cb])
-PWM.options()
-PWM.unexport()
+...PWM.isHW()			- is hardware PWM (only supported)..
+...PWM.setRange(range)..
+...PWM.setClock(clock)..
+...PWM.setMode(mode)..
+...PWM.write(value[, cb])..
+...PWM.options()..
+...PWM.unexport()..
 
 ### SPI
+***
 
-#### important tip - use in console before
 	$ gpio load spi
 
 ```js
@@ -256,12 +260,13 @@ PWM.unexport()
     }
 ```
 #### SPI methods
-SPI.options()
-SPI.write(data, arg [,cb])
-SPI.read(arg [,cb])
-SPI.transfer(data, arg [,cb])
+...SPI.options()..
+...SPI.write(data, arg [,cb])..
+...SPI.read(arg [,cb])..
+...SPI.transfer(data, arg [,cb])..
 
 ### LCD
+***
 ```js
 	var pi = require('pidriver'),
 		lcd = new pi.LCD(['GPIO7','GPIO8','GPIO25','GPIO24','GPIO23','GPIO18']);
@@ -291,7 +296,7 @@ SPI.transfer(data, arg [,cb])
 ```
 
 #### LCD methods
-LCD.clear([cb])
-LCD.home([cb])
-LCD.write([cb])
-LCD.setPosition(x, y [,cb]);
+...LCD.clear([cb])..
+...LCD.home([cb])..
+...LCD.write([cb])..
+...LCD.setPosition(x, y [,cb])..
