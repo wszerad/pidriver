@@ -280,13 +280,13 @@ for mode use "mods"
     }
 ```
 #### SPI methods
-+SPI.options()
++ SPI.options()
 
-+SPI.write(data, arg [,cb])
++ SPI.write(data, arg [,cb])
 
-+SPI.read(arg [,cb])
++ SPI.read(arg [,cb])
 
-+SPI.transfer(data, arg [,cb])
++ SPI.transfer(data, arg [,cb])
 
 
 ### LCD
