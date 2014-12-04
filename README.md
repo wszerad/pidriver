@@ -132,39 +132,39 @@ Gpio is also Event Emitter:
 > 'down' - state 0
 
 #### Gpio methods
-+Gpio.read([cb])			- read state
++ Gpio.read([cb])			- read state
 
-+Gpio.write(state [,cb])	- set state
++ Gpio.write(state [,cb])	- set state
 
-+Gpio.up([cb])			- set state high
++ Gpio.up([cb])			- set state high
 
-+Gpio.down([cb])			- set state low
++ Gpio.down([cb])			- set state low
 
-+Gpio.setEdge(edge)
++ Gpio.setEdge(edge)
 
-+Gpio.setDirection(dir)
++ Gpio.setDirection(dir)
 
-+Gpio.setPull(pud)
++ Gpio.setPull(pud)
 
-+Gpio.isPullable()
++ Gpio.isPullable()
 
-+Gpio.isInput()
++ Gpio.isInput()
 
-+Gpio.isOutput()
++ Gpio.isOutput()
 
-+Gpio.direction()		- get direction
++ Gpio.direction()		- get direction
 
-+Gpio.options()			- get options
++ Gpio.options()			- get options
 
-+Gpio.unexport()
++ Gpio.unexport()
 
 ### Group
 ***
 ```js
 	var pi = require('pidriver'),
-	led0 = new _.Gpio('GPIO27', {mode: _.OUTPUT}),
-	led1 = new _.Gpio('GPIO22', {mode: _.OUTPUT}),
-	led2 = new _.Gpio('GPIO22', {mode: _.OUTPUT});
+	led0 = new pi.Gpio('GPIO27', {mode: _.OUTPUT}),
+	led1 = new pi.Gpio('GPIO22', {mode: _.OUTPUT}),
+	led2 = new pi.Gpio('GPIO22', {mode: _.OUTPUT});
 
 	var group = new pi.Group([led0, led1, led2]);
 	group.up();	//light up all leds
@@ -176,15 +176,15 @@ Gpio is also Event Emitter:
 **gpios** - Array of Gpio
 
 #### Group methods
-+Group.read([cb])
++ Group.read([cb])
 
-+Group.write(value [,cb])
++ Group.write(value [,cb])
 > value is number (you can use hex(0xFF) also)
 > number is formatted to bits array (85 -> 01010101) and asian to proper pin
 
-+Group.up([cb])
++ Group.up([cb])
 
-+Group.down([cb])
++ Group.down([cb])
 
 ### PWM
 ***
@@ -224,19 +224,19 @@ about range, clock, mode see [PWM](http://wiringpi.com/reference/raspberry-pi-sp
 for mode use "mods"
 
 #### PWM methods
-+PWM.isHW()			- is hardware PWM (only supported)
++ PWM.isHW()			- is hardware PWM (only supported)
 
-+PWM.setRange(range)
++ PWM.setRange(range)
 
-+PWM.setClock(clock)
++ PWM.setClock(clock)
 
-+PWM.setMode(mode)
++ PWM.setMode(mode)
 
-+PWM.write(value[, cb])
++ PWM.write(value[, cb])
 
-+PWM.options()
++ PWM.options()
 
-+PWM.unexport()
++ PWM.unexport()
 
 ### SPI
 ***
@@ -245,7 +245,7 @@ for mode use "mods"
 
 ```js
 	var pi = require('pidriver'),
-		spi = new _.SPI(0, {
+		spi = new pi.SPI(0, {
 			preBuffering: function(buff, arg){
 				buff.writeUInt8(1, 0);
 				buff.writeUInt8((8+arg)<<4, 1);
@@ -320,10 +320,10 @@ for mode use "mods"
 ```
 
 #### LCD methods
-+LCD.clear([cb])
++ LCD.clear([cb])
 
-+LCD.home([cb])
++ LCD.home([cb])
 
-+LCD.write([cb])
++ LCD.write([cb])
 
-+LCD.setPosition(x, y [,cb])
++ LCD.setPosition(x, y [,cb])
