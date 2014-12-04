@@ -313,7 +313,7 @@ Gpio.prototype.setDirection = function(dir) {
 };
 
 Gpio.prototype.direction = function() {
-	return this.isInput();
+	return (this.isInput())? 'in' : 'out';
 };
 
 Gpio.prototype.setPull = function(pud) {

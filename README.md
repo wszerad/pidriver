@@ -1,5 +1,3 @@
-npm install pidriver
-
 ## pidriver
 
 Node.js bind of [wiringPi](http://wiringpi.com/) lib
@@ -9,6 +7,60 @@ Node.js bind of [wiringPi](http://wiringpi.com/) lib
     $ [sudo] npm install pidriver
 
 ## Usage
+
+Some functions may need root privileges
+
+	$ [sudo] node myapp
+
+API is at most sync but any function that have callback(cb) can by async
+ ```js
+ //sync
+ var ret = input.write(0);
+
+ //async
+ input,write(0, function(err, ret){
+ 	console.log(arguments);
+ })
+ ```
+
+#### using mods
+```js
+	var pi = require('pidriver');
+
+	pi.INPUT	//'in'
+
+	//all mods:
+
+	var mods = {
+		//Gpio mode:
+		INPUT: 'in',
+		OUTPUT: 'out',
+
+		//for internal use rather (best not to use)
+		PWM_OUTPUT: 2,
+		GPIO_CLOCK: 3,
+
+		//Gpio states:
+		LOW: new Buffer('0'),
+		HIGH: new Buffer('1'),
+
+		// Gpio pull
+		PUD_OFF: 0,
+		PUD_DOWN: 1,
+		PUD_UP: 2,
+
+		// PWM
+		PWM_MODE_MS: 0,
+		PWM_MODE_BAL: 1,
+
+		// Interrupt levels
+		INT_EDGE_NONE: 'none',
+		INT_EDGE_SETUP: 0,
+		INT_EDGE_FALLING: 'falling',
+		INT_EDGE_RISING: 'rising',
+		INT_EDGE_BOTH: 'both'
+	};
+```
 
 ### Gpio
 
@@ -28,11 +80,11 @@ input.on('down', function(input){
 });
 ```
 
-new Gpio(gpio, [options])
+#### new Gpio(gpio [,options])
 
-gpio - pin number / 'GPIOx' / 'WPIOx' / 'special name'
-You can use pin number or one of most popular names: 'GPIOx' for official gpio numbering, 'WPIOx' for wiringPi gpio numbering or its special name like 'PWM0' (for 12s pin)
-[pin map](http://wiringpi.com/pins/)
+**gpio** - pin number / 'GPIOx' / 'WPIOx' / 'special name'
+> You can use pin number or one of most popular names: 'GPIOx' for official gpio numbering, 'WPIOx' for wiringPi gpio numbering or its special name like 'PWM0' (for 12s pin)
+> [pin map](http://wiringpi.com/pins/)
 
 Full list of available names:
 ```js
@@ -54,76 +106,43 @@ console.log(pi.pins)
 */
 ```
 
-options
+**options**
 
 ```js
 	//default
 	{
-		edge: mods.INT_EDGE_BOTH,
-		mode: mods.INPUT,
-		pull: mods.PUD_OFF,
+		edge: pi.INT_EDGE_BOTH,
+		mode: pi.INPUT,
+		pull: pi.PUD_OFF,
 		state: 0	//initial state
 	}
 ```
 
-edge
-```js
-
-mods = {
-	...
-	INT_EDGE_NONE: 'none',
-	INT_EDGE_FALLING: 'falling',
-	INT_EDGE_RISING: 'rising',
-	INT_EDGE_BOTH: 'both'
-	...
-}
-```
-
-mode
-```js
-
-mods = {
-	...
-	INPUT: 'in',
-    OUTPUT: 'out',
-	...
-}
-```
-
-pull
-```js
-
-mods = {
-	...
-	PUD_OFF: 0,
-    PUD_DOWN: 1,
-    PUD_UP: 2,
-	...
-}
-```
+About mode and pull [wiringPi doc](http://wiringpi.com/reference/core-functions/)
+use mods for edge, mode, pull
 
 Gpio is also Event Emitter with events:
 
-Gpio.on('event', cb)
-
-events:
-'change' - state change
-'up' - state 1
-'down' - state 0
+> Gpio.on('event', cb)
+>
+> events:
+> 'change' - state change
+> 'up' - state 1
+> 'down' - state 0
 
 #### Gpio methods
-Gpio.read([cb])
-Gpio.write(state [,cb])
-Gpio.up([cb])
-Gpio.down([cb])
+Gpio.read([cb])			- read state
+Gpio.write(state [,cb])	- set state
+Gpio.up([cb])			- set state high
+Gpio.down([cb])			- set state low
 Gpio.setEdge(edge)
 Gpio.setDirection(dir)
 Gpio.setPull(pud)
-Gpio.direction()
 Gpio.isPullable()
 Gpio.isInput()
 Gpio.isOutput()
-Gpio.options()
+Gpio.direction()		- get direction
+Gpio.options()			- get options
 Gpio.unexport()
 
 ### Group
@@ -138,8 +157,15 @@ Gpio.unexport()
 	group.write(5);	// turn on leds: led0 and led2
 ```
 
+#### new Group(gpios)
+
+**gpios** - Array of Gpio
+
+#### Group methods
 Group.read([cb])
 Group.write(value [,cb])
+> value is number (you can use hex(0xFF) also)
+> number is formatted to bits array (85 -> 01010101) and asian to proper pin
 Group.up([cb])
 Group.down([cb])
 
@@ -161,7 +187,12 @@ Group.down([cb])
 	}, 100);
 ```
 
-options
+#### new PWM(gpio [,options])
+
+**gpio** - gpio name, see Gpio
+
+**options**
+
 ```js
 //default
 {
@@ -171,10 +202,11 @@ options
 	duty: 0
 }
 ```
-
 about range, clock, mode see [PWM](http://wiringpi.com/reference/raspberry-pi-specifics/)
+for mode use "mods"
 
-PWM.isHW()
+#### PWM methods
+PWM.isHW()			- is hardware PWM (only supported)
 PWM.setRange(range)
 PWM.setClock(clock)
 PWM.setMode(mode)
@@ -183,6 +215,10 @@ PWM.options()
 PWM.unexport()
 
 ### SPI
+
+#### important tip - use in console before
+	$ gpio load spi
+
 ```js
 	var pi = require('pidriver'),
 		spi = new _.SPI(0, {
@@ -205,7 +241,21 @@ PWM.unexport()
 		console.log(spi.read(channel));
 	},200);
 ```
+#### new SPI(channel [,options])
+**channel** - there is only two channels (0 and 1 (CE0 and CE1 pin))
 
+**options**
+```js
+	//default
+	{
+		channel: 0,
+		clock: 1000000,
+		preBuffering: null,
+		postBuffering: null,
+		words: 3
+    }
+```
+#### SPI methods
 SPI.options()
 SPI.write(data, arg [,cb])
 SPI.read(arg [,cb])
@@ -227,18 +277,20 @@ SPI.transfer(data, arg [,cb])
 	} , 500)
 ```
 
-gpios - array of GPIOx (first is rs, second strb, channel0, channel1, ...)
+#### new LCD(gpios [,options])
+**gpios** - array of GPIO name (first is rs, second strb, channel0, channel1, ...)
 
-options
+**options**
 ```js
 	//default
 	{
 		rows: 2,	//number of LED's rows
 		cols: 16,	//number of LED's cols
-		bits: 4	//number of LED's channel (4 or 8 depends on LCD and installation)
+		bits: 4		//number of LED's channel (4 or 8 depends on LCD and installation)
 	}
 ```
 
+#### LCD methods
 LCD.clear([cb])
 LCD.home([cb])
 LCD.write([cb])
