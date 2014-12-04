@@ -144,7 +144,7 @@ Gpio is also Event Emitter:
 ...Gpio.isOutput()..
 ...Gpio.direction()		- get direction..
 ...Gpio.options()			- get options..
-..Gpio.unexport()..
+..Gpio.unexport()
 
 ### Group
 ***
@@ -170,7 +170,7 @@ Gpio is also Event Emitter:
 > number is formatted to bits array (85 -> 01010101) and asian to proper pin
 
 ...Group.up([cb])..
-...Group.down([cb])..
+...Group.down([cb])
 
 ### PWM
 ***
@@ -216,7 +216,7 @@ for mode use "mods"
 ...PWM.setMode(mode)..
 ...PWM.write(value[, cb])..
 ...PWM.options()..
-...PWM.unexport()..
+...PWM.unexport()
 
 ### SPI
 ***
@@ -263,7 +263,7 @@ for mode use "mods"
 ...SPI.options()..
 ...SPI.write(data, arg [,cb])..
 ...SPI.read(arg [,cb])..
-...SPI.transfer(data, arg [,cb])..
+...SPI.transfer(data, arg [,cb])
 
 ### LCD
 ***
@@ -299,4 +299,4 @@ for mode use "mods"
 ...LCD.clear([cb])..
 ...LCD.home([cb])..
 ...LCD.write([cb])..
-...LCD.setPosition(x, y [,cb])..
+...LCD.setPosition(x, y [,cb])
