@@ -133,17 +133,29 @@ Gpio is also Event Emitter:
 
 #### Gpio methods
 +Gpio.read([cb])			- read state
+
 +Gpio.write(state [,cb])	- set state
+
 +Gpio.up([cb])			- set state high
+
 +Gpio.down([cb])			- set state low
+
 +Gpio.setEdge(edge)
+
 +Gpio.setDirection(dir)
+
 +Gpio.setPull(pud)
+
 +Gpio.isPullable()
+
 +Gpio.isInput()
+
 +Gpio.isOutput()
+
 +Gpio.direction()		- get direction
+
 +Gpio.options()			- get options
+
 +Gpio.unexport()
 
 ### Group
@@ -165,11 +177,13 @@ Gpio is also Event Emitter:
 
 #### Group methods
 +Group.read([cb])
+
 +Group.write(value [,cb])
 > value is number (you can use hex(0xFF) also)
 > number is formatted to bits array (85 -> 01010101) and asian to proper pin
 
 +Group.up([cb])
+
 +Group.down([cb])
 
 ### PWM
@@ -211,11 +225,17 @@ for mode use "mods"
 
 #### PWM methods
 +PWM.isHW()			- is hardware PWM (only supported)
+
 +PWM.setRange(range)
+
 +PWM.setClock(clock)
+
 +PWM.setMode(mode)
+
 +PWM.write(value[, cb])
+
 +PWM.options()
+
 +PWM.unexport()
 
 ### SPI
@@ -261,9 +281,13 @@ for mode use "mods"
 ```
 #### SPI methods
 +SPI.options()
+
 +SPI.write(data, arg [,cb])
+
 +SPI.read(arg [,cb])
+
 +SPI.transfer(data, arg [,cb])
+
 
 ### LCD
 ***
@@ -297,6 +321,9 @@ for mode use "mods"
 
 #### LCD methods
 +LCD.clear([cb])
+
 +LCD.home([cb])
+
 +LCD.write([cb])
+
 +LCD.setPosition(x, y [,cb])
