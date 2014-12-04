@@ -3,7 +3,7 @@
 
 var bind = require('./build/Release/wirebind'),
 	Epoll = require('epoll').Epoll,
-	$ = require('./tools.js'),
+	$ = require('enderscore'),
 	fs = require('fs'),
 	util = require("util"),
 	bufferIO = new Buffer(1),
@@ -11,7 +11,7 @@ var bind = require('./build/Release/wirebind'),
 	gpioPath = '/sys/class/gpio/';
 
 var exp = {
-	version: '0.0.1'
+	version: '0.0.3'
 };
 
 var getRev = exp.getRev = function(cb){
