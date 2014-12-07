@@ -19,7 +19,7 @@
 	"wiringpi"
   ],
   "author": "Wszerad",
-  "license": "Free",
+  "license": "MIT",
   "devDependencies": {
     "node-gyp": "0.8.x"
   },
